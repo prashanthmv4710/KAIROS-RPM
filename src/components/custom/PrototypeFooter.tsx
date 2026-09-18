@@ -27,10 +27,14 @@ export function PrototypeFooter() {
         right: 0,
         bottom: 0,
         height: PROTOTYPE_FOOTER_HEIGHT,
+        lineHeight: PROTOTYPE_FOOTER_HEIGHT,
         zIndex: 1000,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'flex-end',
+        // Plain block layout + textAlign (not display:flex) to match
+        // kairos-rex-director's footer exactly: flex containers treat the
+        // whitespace-only text node in `{' | '}` as insignificant and
+        // collapse it away entirely, silently eating the spacing around
+        // the separator that renders fine in normal inline/block flow.
+        textAlign: 'right',
         padding: '0 12px',
         fontFamily: 'system-ui, sans-serif',
         fontSize: '11px',

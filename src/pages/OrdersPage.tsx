@@ -63,6 +63,28 @@ export default function OrdersPage() {
   const [activeTab, setActiveTab] = React.useState<(typeof ORDER_TABS)[number]['value']>('pending');
   const [activeMetric, setActiveMetric] = React.useState('rejected');
 
+  // Collapse the blue ProjectHeader band while scrolling down (to give the
+  // table more room), and bring it back while scrolling up -- a common
+  // pattern for secondary header content that isn't needed once you're
+  // already reading the list. Small deltas are ignored so trackpad/momentum
+  // jitter doesn't flicker it, and scrolling back near the top always shows
+  // it again regardless of direction.
+  const [isProjectHeaderCollapsed, setIsProjectHeaderCollapsed] = React.useState(false);
+  const lastScrollTopRef = React.useRef(0);
+
+  const handleBodyScroll = (event: React.UIEvent<HTMLDivElement>) => {
+    const { scrollTop } = event.currentTarget;
+    const delta = scrollTop - lastScrollTopRef.current;
+
+    if (scrollTop <= 4) {
+      setIsProjectHeaderCollapsed(false);
+    } else if (Math.abs(delta) > 4) {
+      setIsProjectHeaderCollapsed(delta > 0);
+    }
+
+    lastScrollTopRef.current = scrollTop;
+  };
+
   return (
     <Page title="Orders — Project 00500/RM, pending and queued reprocess queue" titleVisuallyHidden>
       {/* `position: fixed` (not height: '100vh') pins the whole app shell to
@@ -84,22 +106,36 @@ export default function OrdersPage() {
           <div style={{ flex: 1, minWidth: 0, height: '100%', display: 'flex', flexDirection: 'column' }}>
             {/* Fixed header band — stays in place; only the section below scrolls. */}
             <div style={{ background: 'var(--ld-semantic-color-surface)', flexShrink: 0 }}>
-              <ProjectHeader
-                projectName="Project - 000500/RM"
-                storeNumber="4535"
-                projectType="Remodel"
-                statusTags={[
-                  { label: 'Needs focus', color: 'negative' },
-                  { label: 'Swim upstream', color: 'neutral' },
-                  { label: 'Pre possession', color: 'neutral' },
-                ]}
-                milestones={[
-                  { label: 'Today', date: '07/25/2026' },
-                  { label: 'PD', date: '10/15/2026', daysToGo: '100 days to go' },
-                  { label: 'GO', date: '05/03/2027' },
-                ]}
-                activeMilestoneIndex={0}
-              />
+              {/* `grid-template-rows` 1fr/0fr is the modern collapse-to-auto-height
+                  trick -- unlike `max-height`, it animates smoothly to/from the
+                  band's real height without needing to hardcode a pixel value
+                  that could clip content or leave a dead zone in the transition. */}
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateRows: isProjectHeaderCollapsed ? '0fr' : '1fr',
+                  transition: 'grid-template-rows 220ms ease',
+                }}
+              >
+                <div style={{ overflow: 'hidden', minHeight: 0 }}>
+                  <ProjectHeader
+                    projectName="Project - 000500/RM"
+                    storeNumber="4535"
+                    projectType="Remodel"
+                    statusTags={[
+                      { label: 'Needs focus', color: 'negative' },
+                      { label: 'Swim upstream', color: 'neutral' },
+                      { label: 'Pre possession', color: 'neutral' },
+                    ]}
+                    milestones={[
+                      { label: 'Today', date: '07/25/2026' },
+                      { label: 'PD', date: '10/15/2026', daysToGo: '100 days to go' },
+                      { label: 'GO', date: '05/03/2027' },
+                    ]}
+                    activeMilestoneIndex={0}
+                  />
+                </div>
+              </div>
 
               <div
                 style={{
@@ -146,6 +182,7 @@ export default function OrdersPage() {
                 canvas (surface-subtle) with the KPI cards and the table's own
                 white Card floating on top of it. */}
             <div
+              onScroll={handleBodyScroll}
               style={{
                 flex: 1,
                 minHeight: 0,
