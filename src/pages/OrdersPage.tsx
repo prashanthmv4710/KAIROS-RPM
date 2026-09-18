@@ -13,6 +13,7 @@ import { ProjectHeader } from '../components/rpm/ProjectHeader';
 import { OrderStatusMetrics } from '../components/rpm/OrderStatusMetrics';
 import { RejectedOrdersTable } from '../components/rpm/RejectedOrdersTable';
 import { rejectedOrders } from '../data/rejectedOrdersData';
+import { PROTOTYPE_FOOTER_HEIGHT } from '../components/custom/PrototypeFooter';
 
 const ORDER_TABS = [
   { value: 'active', label: 'Active orders', count: 3242 },
@@ -74,7 +75,7 @@ export default function OrdersPage() {
           entirely means there is no outer scroll surface left to fall
           through to; only the one `overflow-y: auto` pane below can ever
           move. */}
-      <div style={{ position: 'fixed', inset: 0, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+      <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: PROTOTYPE_FOOTER_HEIGHT, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
         <RpmTopNav storeNumber="4535" />
 
         <div style={{ display: 'flex', flex: 1, minHeight: 0 }}>

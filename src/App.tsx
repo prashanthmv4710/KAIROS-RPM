@@ -4,6 +4,7 @@ import { useInitializeStore } from "./utils/store";
 import { A11yAnnouncementProvider } from "./components/A11yAnnouncement";
 import { A11yDevAssertions } from "./components/A11yDevAssertions";
 import { SnackbarProvider } from "./components/Snackbar";
+import { PrototypeFooter } from "./components/custom/PrototypeFooter";
 import OrdersPage from "./pages/OrdersPage";
 
 export default function App() {
@@ -61,6 +62,7 @@ export default function App() {
       <A11yDevAssertions />
       <SnackbarProvider>
         <OrdersPage />
+        <PrototypeFooter />
       </SnackbarProvider>
     </A11yAnnouncementProvider>
   );
