@@ -1,0 +1,114 @@
+/* RpmSideNav — ported from the Kairos REX Director reference app's
+   AppSidebar.css, which itself mirrors the generated SidebarShell pattern's
+   visual system (patterns/Sidebar/Sidebar.css, .ld-sidebar-shell*). Authored
+   locally (not SidebarShell) because SidebarShell is generated/read-only and
+   exposes no prop to fix its Lock/Unlock toggle label. */
+
+.rpm-sidenav {
+  border-right: 1px solid var(--ld-semantic-color-separator, #e3e4e5);
+  background-color: var(--ld-semantic-color-surface, #ffffff);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--ld-primitive-scale-space-150, 12px);
+  align-self: stretch;
+  overflow: hidden;
+  position: relative;
+  flex-shrink: 0;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.rpm-sidenav__items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ld-primitive-scale-space-50);
+}
+
+.rpm-sidenav__item,
+.rpm-sidenav__toggle {
+  display: flex;
+  align-items: center;
+  height: 36px;
+  border-radius: var(--ld-semantic-border-radius-small, 4px);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background-color 150ms;
+  color: var(--ld-semantic-color-text, #2e2f32);
+}
+
+.rpm-sidenav__item--expanded,
+.rpm-sidenav__toggle--expanded {
+  width: 100%;
+  padding-left: var(--ld-primitive-scale-space-150, 12px);
+  padding-right: var(--ld-primitive-scale-space-150, 12px);
+  gap: var(--ld-primitive-scale-space-150, 12px);
+  justify-content: space-between;
+}
+
+.rpm-sidenav__item--collapsed,
+.rpm-sidenav__toggle--collapsed {
+  width: 40px;
+  margin: 0 auto;
+  justify-content: center;
+}
+
+.rpm-sidenav__item:hover:not(.rpm-sidenav__item--active),
+.rpm-sidenav__toggle:hover {
+  background-color: var(--ld-semantic-color-surface-subtle, #f8f8f8);
+}
+
+.rpm-sidenav__item--active {
+  background-color: var(--ld-semantic-color-fill-brand-subtle, #e9f1fe);
+}
+
+.rpm-sidenav__item-content {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ld-primitive-scale-space-150, 12px);
+}
+
+.rpm-sidenav__item-icon {
+  display: inline-flex;
+  color: var(--ld-semantic-color-text, #2e2f32);
+}
+
+.rpm-sidenav__item-icon--active {
+  color: var(--ld-semantic-color-action-fill-primary, #0053e2);
+}
+
+.rpm-sidenav__item-label,
+.rpm-sidenav__toggle-label {
+  font-size: var(--ld-semantic-font-body-small-size);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--ld-semantic-color-text, #2e2f32);
+}
+
+.rpm-sidenav__item-label--active {
+  color: var(--ld-semantic-color-action-fill-primary, #0053e2);
+}
+
+.rpm-sidenav__toggle-icon {
+  display: inline-flex;
+  align-items: center;
+  color: var(--ld-semantic-color-text, #2e2f32);
+}
+
+.rpm-sidenav__resize-handle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 4px;
+  height: 100%;
+  cursor: col-resize;
+  background-color: transparent;
+  transition: background-color 150ms;
+  z-index: 10;
+}
+
+.rpm-sidenav__resize-handle:hover {
+  background-color: var(--ld-semantic-color-action-fill-primary, #0053e2);
+}

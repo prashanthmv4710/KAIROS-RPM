@@ -1,0 +1,73 @@
+/*
+ * KPI-tile look for the order-status card picker, ported from the Kairos
+ * REX Director reference app's inbox-section-card-wrap recipe (which itself
+ * matches the Figma "Kairos Warehouse Metrics/Selected/Active" reference,
+ * node 8673:6989): rounded 16px metric card, bold neutral title, large
+ * value, resting = plain card, selected = light-blue tint + primary-blue
+ * 2px border + elevation-100 shadow.
+ *
+ * No visible radio dot — the native radio input stays in the DOM (visually
+ * hidden, not display:none) so keyboard + screen reader selection still
+ * works; only the decorative circle graphic is hidden.
+ *
+ * NOTE: SelectCard's own UNSAFE_className prop clobbers its internal
+ * classList (a quirk of that generated component's prop spread order —
+ * passing UNSAFE_className silently drops ld-select-card-container /
+ * ld-select-card-checked entirely). So selection styling is driven off our
+ * own wrapper div's "is-selected" class instead, via descendant selectors.
+ */
+
+.rpm-metric-card-wrap .ld-select-card-content-wrapper {
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: var(--ld-primitive-scale-space-100, 0.5rem) !important;
+}
+
+.rpm-metric-card-wrap .ld-select-card-control {
+  min-width: 0 !important;
+  margin-top: 0 !important;
+  gap: 0 !important;
+}
+
+.rpm-metric-card-wrap .ld-radio-radioInput {
+  display: none !important;
+}
+
+/* The native radio input is kept in the DOM (not display:none) for
+   keyboard/screen-reader support, but with its own decorative circle
+   hidden, the browser's default focus outline renders as a bare rectangle.
+   A nicer focus indicator is supplied on the whole card via :focus-within
+   below, so suppress this one. */
+.rpm-metric-card-wrap .ld-radio-input {
+  outline: none !important;
+}
+
+.rpm-metric-card-wrap .ld-select-card-children {
+  text-align: left !important;
+  gap: 0 !important;
+}
+
+.rpm-metric-card-wrap .ld-select-card-label-text {
+  font-size: var(--ld-semantic-font-body-medium-size, 1rem) !important;
+  line-height: var(--ld-semantic-font-body-medium-line-height, 1.5rem) !important;
+  font-weight: var(--ld-semantic-font-body-medium-weight-alt, 700) !important;
+  color: var(--ld-semantic-color-text, #2e2f32) !important;
+}
+
+.rpm-metric-card-wrap .ld-select-card-container {
+  border: 1px solid var(--ld-semantic-color-separator, #d6d8db) !important;
+  border-radius: 1rem !important;
+  box-shadow: none !important;
+  background: var(--ld-semantic-color-surface) !important;
+}
+
+.rpm-metric-card-wrap.is-selected .ld-select-card-container {
+  border: 2px solid var(--ld-semantic-color-border-activated, #0053e2) !important;
+  background: var(--ld-semantic-color-surface-activated, #f0f5ff) !important;
+  box-shadow: var(--ld-semantic-elevation-100, 0 1px 2px 1px rgba(0, 0, 0, 0.15), 0 -1px 2px rgba(0, 0, 0, 0.1)) !important;
+}
+
+.rpm-metric-card-wrap:focus-within {
+  outline: 2px solid var(--ld-semantic-color-border-activated, #0053e2);
+  outline-offset: 2px;
+}

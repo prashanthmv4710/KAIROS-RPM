@@ -1,0 +1,19 @@
+/* Modal's header (title area) is generated output — its own bottom padding
+   is 8px below 600px and 16px at/above (see Modal.css
+   `.ld-modal-modalportal-header`), which was pushing this subtitle further
+   down than intended and, combined with the negative margin previously
+   used to compensate, clipping it. There's no prop to control that
+   generated padding per-instance, so it's overridden here directly —
+   pinned to a flat 8px at every breakpoint (`!important` needed since the
+   generated CSS re-asserts 16px in its own ≥600px media query). */
+.ld-modal-modalportal-header {
+  padding-block-end: var(--ld-primitive-scale-space-100) !important;
+}
+
+.rpm-article-modal-subtitle {
+  display: block;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  margin-top: 0;
+  margin-bottom: var(--ld-primitive-scale-space-150);
+}

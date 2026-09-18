@@ -1,0 +1,11 @@
+/*
+ * Tag (src/components/Tag) has no style/className escape hatch — its own
+ * CSS always applies a "medium" (rounded-rect) corner radius. Figma's
+ * project status pills ("Needs focus", "Swim upstream", "Pre possession")
+ * are fully round, so the radius is overridden here via a descendant
+ * selector from a wrapper span, leaving every other Tag style (colors,
+ * padding, typography) exactly as the real component renders it.
+ */
+.rpm-status-tag-wrap .ld-tag-tag {
+  border-radius: var(--ld-semantic-border-radius-round, 62.5rem);
+}

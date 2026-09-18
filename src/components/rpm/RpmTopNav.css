@@ -1,0 +1,10 @@
+/*
+ * Masthead's app-name span (`.ld-masthead__app-name`) hardcodes its
+ * font-size to the body-medium token with no component-level style prop or
+ * CSS-variable escape hatch (unlike topNav-fill/text/separator, which are
+ * all exposed as custom properties). Overriding it requires a scoped
+ * selector from a wrapper class passed via UNSAFE_className.
+ */
+.rpm-top-nav-masthead .ld-masthead__app-name {
+  font-size: 1.25rem; /* 20px */
+}
